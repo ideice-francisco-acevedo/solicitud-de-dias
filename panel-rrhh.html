@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel RRHH - Gestión de Solicitudes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+    <div class="container">
+        <header class="form-header">
+            <h1>Panel de Gestión - Recursos Humanos</h1>
+        </header>
+
+        <div class="panel-nav">
+            <a href="index.html" class="btn btn-secondary btn-sm">Solicitar Día</a>
+            <span id="badgeNotificaciones" class="badge hidden">0</span>
+        </div>
+
+        <div class="panel-content">
+            <div class="form-actions" style="margin-bottom: 20px;">
+                <button type="button" id="btnCargar" class="btn btn-primary">Cargar Solicitudes</button>
+            </div>
+
+            <div id="filtroRrhh" class="form-row panel-filtro" style="display:none;">
+                <div class="form-group" style="max-width: 500px;">
+                    <label for="buscarEmpleado">Seleccionar RRHH:</label>
+                    <input type="text" id="buscarEmpleado" list="listaEmpleados" placeholder="Escriba nombre, apellido o cédula para buscar..." autocomplete="off">
+                    <datalist id="listaEmpleados"></datalist>
+                    <span id="empleadoSeleccionado" class="empleado-info"></span>
+                </div>
+            </div>
+
+            <div id="tablaContainer" class="tabla-container hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Empleado</th>
+                            <th>Día</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Obs.</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaSolicitudes"></tbody>
+                </table>
+                <p id="sinResultados" class="sin-resultados hidden">No hay solicitudes pendientes.</p>
+            </div>
+
+            <details class="notificaciones-section">
+                <summary>Notificaciones <span id="badgeNotifDetalle" class="badge-inline hidden">0</span></summary>
+                <ul id="listaNotificaciones" class="notif-lista"></ul>
+            </details>
+        </div>
+    </div>
+
+    <div id="spinner" class="spinner-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="modalEditar" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Editar Solicitud</h3>
+            <form id="formEditar" novalidate onsubmit="return false">
+                <input type="hidden" id="editSolicitudId">
+                <div class="form-row">
+                    <div class="form-group"><label for="editFechaSolicitud">Fecha solicitud:</label><input type="date" id="editFechaSolicitud"></div>
+                    <div class="form-group"><label for="editDiaSolicitado">Día solicitado:</label><input type="date" id="editDiaSolicitado"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="editTipoDia">Tipo:</label><select id="editTipoDia"><option value="1">Personal</option><option value="2">Cumpleaños</option></select></div>
+                    <div class="form-group"><label for="editEstado">Estado:</label><select id="editEstado"><option value="1">Pendiente</option><option value="2">Aprobado</option><option value="3">Rechazado</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="editObservaciones">Observaciones:</label><textarea id="editObservaciones" rows="2"></textarea></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="btnGuardarEdicion" class="btn btn-success">Guardar</button>
+                    <button type="button" id="btnCancelarEdicion" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/panel-rrhh.js"></script>
+</body>
+</html>

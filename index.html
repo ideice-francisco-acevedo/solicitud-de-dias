@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Solicitud Día Personal o de Cumpleaños</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="form-header">
+            <h1>Formulario Solicitud Día Personal o de Cumpleaños</h1>
+        </header>
+
+        <form id="formSolicitud" novalidate onsubmit="return false">
+            <fieldset>
+                <legend>Datos personales</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fechaSolicitud">Fecha solicitud:</label>
+                        <input type="date" id="fechaSolicitud" name="fecha_solicitud" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cédula de Identidad:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="cedula" name="cedula" placeholder="Ej: 001-1234567-8 o 00112345678" required>
+                            <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
+                        </div>
+                        <span class="field-error" id="errorCedula"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" id="apellidos" name="apellidos" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" id="nombres" name="nombres" readonly required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="puesto">Puesto:</label>
+                        <input type="text" id="puesto" name="puesto" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="areaTrabajo">Área de trabajo:</label>
+                        <input type="text" id="areaTrabajo" name="area_trabajo" readonly required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Día solicitado</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="diaSolicitado">Día solicitado:</label>
+                        <input type="date" id="diaSolicitado" name="dia_solicitado" required>
+                        <span class="field-error" id="errorDiaSolicitado"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group radio-group">
+                        <label>Tipo de día solicitado (Marcar con una X):</label>
+                        <div class="radio-options">
+                            <label class="radio-label">
+                                <input type="radio" name="tipo_dia" value="1" required>
+                                <span>Día Personal</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="tipo_dia" value="2" required>
+                                <span>Día de Cumpleaños</span>
+                            </label>
+                        </div>
+                        <span class="field-error" id="errorTipoDia"></span>
+                    </div>
+                </div>
+
+                <div id="infoCumpleanos" class="info-box hidden">
+                    <span class="info-icon">&#9432;</span>
+                    <span id="mensajeCumpleanos"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="chkObservaciones">
+                            <span>Agregar observaciones</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row" id="filaObservaciones" style="display: none;">
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones:</label>
+                        <textarea id="observaciones" name="observaciones" placeholder="Escriba aquí cualquier observación adicional..."></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" id="btnEnviar" class="btn btn-success">Enviar Solicitud</button>
+                <button type="reset" id="btnLimpiar" class="btn btn-secondary">Limpiar Formulario</button>
+            </div>
+
+            <div class="nav-links">
+                <a href="mis-solicitudes.html">Mis Solicitudes</a>
+                <a href="panel-rrhh.html">Panel RRHH</a>
+            </div>
+
+            <div id="mensajeResultado" class="result-message hidden"></div>
+        </form>
+
+        <footer class="form-footer">
+            <div class="signatures">
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <span class="signature-label">Firma del Empleado</span>
+                    <span class="signature-name" id="nombreEmpleadoFirma"></span>
+                </div>
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <span class="signature-label">Autorizado / Aprobado<br>Supervisor inmediato</span>
+                    <span class="signature-name" id="nombreSupervisorFirma"></span>
+                </div>
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <span class="signature-label">Enc. Recursos Humanos</span>
+                    <span class="signature-name" id="nombreRrhhFirma"></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="spinner" class="spinner-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

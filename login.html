@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEICE - Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="img/ideice-logo-isotipo-vertical-01.svg" alt="IDEICE" class="login-logo-img">
+                <p>Solicitud de Días</p>
+            </div>
+            <form id="formLogin" onsubmit="return false">
+                <div class="form-group">
+                    <label for="cedulaLogin">Cédula</label>
+                    <input type="text" id="cedulaLogin" placeholder="001-1234567-8" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordLogin">Contraseña</label>
+                    <input type="password" id="passwordLogin" placeholder="••••••••" required>
+                </div>
+                <div id="loginError" class="login-error hidden"></div>
+                <button type="submit" id="btnLogin" class="btn-login">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEICE - Solicitud de Días</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="img/ideice-logo-isotipo-vertical-01.svg" alt="IDEICE" class="sidebar-logo">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" data-section="inicio" class="nav-link active">
+                <span class="nav-icon">&#9632;</span> Inicio
+            </a>
+            <a href="#" data-section="nueva" class="nav-link">
+                <span class="nav-icon">&#10010;</span> Nueva Solicitud
+            </a>
+            <a href="#" data-section="mis" class="nav-link">
+                <span class="nav-icon">&#9776;</span> Mis Solicitudes
+            </a>
+            <a href="#" data-section="rrhh" class="nav-link nav-rrhh hidden" id="navRrhh">
+                <span class="nav-icon">&#9881;</span> Panel RRHH
+            </a>
+            <a href="#" data-section="roles" class="nav-link nav-admin hidden" id="navRoles">
+                <span class="nav-icon">&#9733;</span> Gestionar Roles
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" id="btnCambiarPassword" class="nav-link">
+                <span class="nav-icon">&#9998;</span> Cambiar Contraseña
+            </a>
+            <a href="#" id="btnLogout" class="nav-link">
+                <span class="nav-icon">&#10140;</span> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button id="btnMenu" class="btn-menu">&#9776;</button>
+            <h2 id="tituloSeccion">Inicio</h2>
+            <div class="user-info">
+                <span id="nombreUsuario"></span>
+                <span id="rolBadge" class="rol-badge"></span>
+            </div>
+        </header>
+
+        <div class="content-area">
+            <section id="seccionInicio" class="section">
+                <div class="stats-grid">
+                    <div class="stat-card stat-total"><span class="stat-num" id="statTotal">0</span><span class="stat-label">Total Solicitudes</span></div>
+                    <div class="stat-card stat-pending"><span class="stat-num" id="statPendientes">0</span><span class="stat-label">Pendientes</span></div>
+                    <div class="stat-card stat-approved"><span class="stat-num" id="statAprobadas">0</span><span class="stat-label">Aprobadas</span></div>
+                    <div class="stat-card stat-rejected"><span class="stat-num" id="statRechazadas">0</span><span class="stat-label">Rechazadas</span></div>
+                </div>
+                <div class="welcome-card">
+                    <h3 id="welcomeMsg"></h3>
+                    <p id="welcomeSub"></p>
+                </div>
+            </section>
+
+            <section id="seccionNueva" class="section hidden">
+                <div class="card">
+                    <h3>Nueva Solicitud de Día</h3>
+                    <form id="formSolicitudDash" onsubmit="return false">
+                        <div class="form-grid">
+                            <div class="form-group"><label for="fechaSolicitudDash">Fecha solicitud</label><input type="date" id="fechaSolicitudDash"></div>
+                            <div class="form-group"><label for="diaSolicitadoDash">Día solicitado</label><input type="date" id="diaSolicitadoDash"></div>
+                            <div class="form-group">
+                                <label>Tipo de día</label>
+                                <div class="radio-group"><label class="radio-label"><input type="radio" name="tipo_dia_dash" value="1"> Personal</label><label class="radio-label"><input type="radio" name="tipo_dia_dash" value="2"> Cumpleaños</label></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label"><input type="checkbox" id="chkObsDash"> Agregar observaciones</label>
+                            </div>
+                        </div>
+                        <div id="filaObsDash" style="display:none;" class="form-group"><textarea id="obsDash" rows="2" placeholder="Observaciones..."></textarea></div>
+                        <div id="infoCumpleDash" class="info-box hidden"></div>
+                        <div class="form-actions"><button type="submit" id="btnEnviarDash" class="btn btn-success">Enviar Solicitud</button></div>
+                    </form>
+                </div>
+            </section>
+
+            <section id="seccionMis" class="section hidden">
+                <div class="card">
+                    <h3>Mis Solicitudes</h3>
+                    <div class="tabla-container"><table><thead><tr><th>ID</th><th>F.Solicitud</th><th>Día</th><th>Tipo</th><th>Estado</th><th>Obs.</th><th>Activo</th><th>Acción</th></tr></thead><tbody id="tablaMis"></tbody></table></div>
+                    <p id="sinMis" class="sin-resultados hidden">No se encontraron solicitudes.</p>
+                </div>
+                <details class="notificaciones-section"><summary>Notificaciones <span id="badgeMis" class="badge-inline hidden">0</span></summary><ul id="notifMis" class="notif-lista"></ul></details>
+            </section>
+
+            <section id="seccionRrhh" class="section hidden">
+                <div class="card">
+                    <h3>Panel de Gestión RRHH</h3>
+                    <div class="tabla-container"><table><thead><tr><th>ID</th><th>F.Solicitud</th><th>Empleado</th><th>Día</th><th>Tipo</th><th>Estado</th><th>Obs.</th><th>Activo</th><th>Acción</th></tr></thead><tbody id="tablaRrhh"></tbody></table></div>
+                    <p id="sinRrhh" class="sin-resultados hidden">No hay solicitudes.</p>
+                </div>
+                <details class="notificaciones-section"><summary>Notificaciones <span id="badgeRrhh" class="badge-inline hidden">0</span></summary><ul id="notifRrhh" class="notif-lista"></ul></details>
+            </section>
+
+            <section id="seccionRoles" class="section hidden">
+                <div class="card">
+                    <h3>Gestión de Roles</h3>
+                    <div class="tabla-container"><table><thead><tr><th>ID</th><th>Empleado</th><th>Rol Actual</th><th>Nuevo Rol</th><th>Acción</th></tr></thead><tbody id="tablaRoles"></tbody></table></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="modalEditar" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Editar Solicitud</h3>
+            <form onsubmit="return false"><input type="hidden" id="editSolicitudId">
+                <div class="form-row"><div class="form-group"><label for="editFechaSolicitud">Fecha solicitud</label><input type="date" id="editFechaSolicitud"></div><div class="form-group"><label for="editDiaSolicitado">Día solicitado</label><input type="date" id="editDiaSolicitado"></div></div>
+                <div id="editRrhhFields"><div class="form-row"><div class="form-group"><label for="editTipoDia">Tipo</label><select id="editTipoDia"><option value="1">Personal</option><option value="2">Cumpleaños</option></select></div><div class="form-group"><label for="editEstado">Estado</label><select id="editEstado"><option value="1">Pendiente</option><option value="2">Aprobado</option><option value="3">Rechazado</option></select></div></div></div>
+                <div class="form-row"><div class="form-group"><label for="editObservaciones">Observaciones</label><textarea id="editObservaciones" rows="2"></textarea></div></div>
+                <div class="form-actions"><button type="button" id="btnGuardarEdicion" class="btn btn-success">Guardar</button><button type="button" id="btnCancelarEdicion" class="btn btn-secondary">Cancelar</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalPassword" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Cambiar Contraseña</h3>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="passActual">Contraseña actual</label><input type="password" id="passActual" placeholder="••••"></div>
+                <div class="form-group"><label for="passNueva">Nueva contraseña</label><input type="password" id="passNueva" placeholder="••••"></div>
+                <div class="form-group"><label for="passConfirmar">Confirmar nueva</label><input type="password" id="passConfirmar" placeholder="••••"></div>
+                <div id="passError" class="login-error hidden"></div>
+                <div class="form-actions"><button type="button" id="btnGuardarPassword" class="btn btn-success">Actualizar</button><button type="button" id="btnCancelarPassword" class="btn btn-secondary">Cancelar</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalRechazo" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Motivo del Rechazo</h3>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="motivoRechazo">Describa el motivo:</label><textarea id="motivoRechazo" rows="3" placeholder="Motivo del rechazo..."></textarea></div>
+                <div id="rechazoError" class="login-error hidden"></div>
+                <div class="form-actions"><button type="button" id="btnConfirmarRechazo" class="btn btn-danger">Rechazar</button><button type="button" id="btnCancelarRechazo" class="btn btn-secondary">Cancelar</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="spinner" class="spinner-overlay hidden"><div class="spinner"></div></div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
